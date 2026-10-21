@@ -1,5 +1,7 @@
 const config = require("./config");
-
+function arredondar(valor) {
+  return Math.round(valor * 100) / 100;
+}
 function consumoMensalKwh(aparelho) {
   return (aparelho.potenciaW * aparelho.horasDia * aparelho.diasMes) / 1000;
 }
@@ -24,6 +26,35 @@ function simular(aparelhos) {
     nome: aparelho.nome,
     kwh: consumoMensalKwh(aparelho),
   }));
+
+  const consumoTotal = itens.reduce((soma, item) => soma + item.kwh);
+  const energia = custoEnergia(consumoTotal);
+  const bandeira = adicionalBandeira(consumoTotal);
+
+  const detalhes = itens.map((item) => ({
+    nome: item.nome,
+    kwhMes: arredondar(item.kwh),
+    custo: arredondar(custoEnergia(item.kwh)),
+    percentual:
+      consumoTotal > 0 ? arredondar((item.kwh / consumoTotal) * 100) : 0,
+  }));
+
+  const maisCaro = itens.reduce((maior, item) =>
+    item.kwh > maior.kwh ? item : maior,
+  );
+
+  return {
+    consumoKwhMes: arredondar(consumoTotal),
+    custoEnergia: arredondar(energia),
+    adicionalBandeira: arredondar(bandeira),
+    totalMes: arredondar(energia + bandeira),
+    paineisNecessarios: paineisNecessarios(consumoTotal),
+    aparelhoMaisCaro: {
+      nome: maisCaro.nome,
+      custo: arredondar(custoEnergia(maisCaro.kwh)),
+    },
+    detalhes: detalhes,
+  };
 }
 
 module.exports = {
