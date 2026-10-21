@@ -27,7 +27,7 @@ function simular(aparelhos) {
     kwh: consumoMensalKwh(aparelho),
   }));
 
-  const consumoTotal = itens.reduce((soma, item) => soma + item.kwh);
+  const consumoTotal = itens.reduce((soma, item) => soma + item.kwh, 0);
   const energia = custoEnergia(consumoTotal);
   const bandeira = adicionalBandeira(consumoTotal);
 

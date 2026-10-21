@@ -25,4 +25,4 @@ app.post("/api/simular", (req, res) => {
   // TODO 3: res.json(simular(aparelhos))
 });
 
-app.listen(3000, () => console.log("Medidor Coopera em http://localhost:3000"));
+app.listen(3000, () => console.log("Medidor Coopera em http://localhost:3000"));  
