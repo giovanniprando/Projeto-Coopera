@@ -6,23 +6,58 @@ const app = express();
 app.use(express.json());
 app.use(express.static("public"));
 
+function validarAparelhos(aparelhos) {
+  if (!Array.isArray(aparelhos) || aparelhos.length === 0) {
+    return "a lista de aparelhos não pode ser vazia";
+  }
+
+  for (let i = 0; i < aparelhos.length; i++) {
+    const aparelho = aparelhos[i];
+    const numero = i + 1;
+
+    if (
+      typeof aparelho.potenciaW !== "number" ||
+      aparelho.potenciaW < 1 ||
+      aparelho.potenciaW > 10000
+    ) {
+      return `potenciaW deve estar entre 1 e 10000 (aparelho ${numero})`;
+    }
+
+    if (
+      typeof aparelho.diasMes !== "number" ||
+      !Number.isInteger(aparelho.diasMes) ||
+      aparelho.diasMes < 1 ||
+      aparelho.diasMes > 31
+    ) {
+      return `diasMes deve ser um inteiro entre 1 e 31 (aparelho ${numero})`;
+    }
+
+    if (
+      typeof aparelho.horasDia !== "number" ||
+      aparelho.horasDia < 0 ||
+      aparelho.horasDia > 24
+    ) {
+      return `horasDia deve estar entre 0 e 24 (aparelho ${numero})`;
+    }
+    if (!aparelho || typeof aparelho !== "object" || Array.isArray(aparelho)) {
+      return `aparelho ${numero} inválido`;
+    }
+
+    if (typeof aparelho.nome !== "string" || aparelho.nome.trim() === "") {
+      return `nome deve ser um texto (aparelho ${numero})`;
+    }
+  }
+  return null;
+}
+
 app.post("/api/simular", (req, res) => {
-  // Requisição: POST /api/simular
-{ "aparelhos": [
-    { "nome": "Geladeira", "potenciaW": 150, "horasDia": 24, "diasMes": 30 }
-] }
-
-// Resposta 200
-{ "consumoKwhMes": 108, "custoEnergia": 86.4, "adicionalBandeira": 2.04,
-  "totalMes": 88.44, "paineisNecessarios": 3,
-  "aparelhoMaisCaro": { "nome": "Geladeira", "custo": 86.4 },
-  "detalhes": [ { "nome": "Geladeira", "kwhMes": 108, "custo": 86.4, "percentual": 100 } ] }
-
-// Resposta 400
-{ "erro": "horasDia deve estar entre 0 e 24 (aparelho 1)" }
-  // TODO 1: ler req.body.aparelhos
-  // TODO 2: validar; se inválido: return res.status(400).json({ erro: '...' })
-  // TODO 3: res.json(simular(aparelhos))
+  const aparelhos = req.body?.aparelhos;
+  const erro = validarAparelhos(aparelhos);
+  if (erro) {
+    return res.status(400).json({ erro });
+  }
+  const resultado = simular(aparelhos);
+  return res.status(200).json(resultado);
 });
 
-app.listen(3000, () => console.log("Medidor Coopera em http://localhost:3000"));  
+app.listen(3000, () => console.log("Medidor Coopera em http://localhost:3000"));
