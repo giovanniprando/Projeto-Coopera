@@ -1,38 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Medidor Coopera</title>
-    <script src="app.js"></script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <script src="app.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <section class="card">
-    <section class="Main">
+      <section class="Main">
         <div class="Titulo">
-            <h1>Medidor Coopera</h1>
-            <h2>Juntos por uma energia mais acessível. Simule seu consumo e descubra as vantagens de fazer parte da Coopera Luz.</h2>
+          <h1>Medidor Coopera</h1>
+          <h2>Simule o consumo de aparelhos em sua residência/empresa</h2>
         </div>
-        <div class="form">
-            <label for="nomeaparelho">Nome do Aparelho</label>
-            <input type="text" id="nomeaparelho" placeholder="Ex: Geladeira">
-
-            <label for="potencia">Potência (W)</label>
-            <input type="number" id="potencia" placeholder="Ex: 150">
-
-            <label for="tempo">Tempo de uso (horas)</label>
-            <input type="number" id="tempo" placeholder="Ex: 24">
-
-            <label for="diasMes">Dias de uso no Mês</label>
-            <input type="number" id="diasMes" placeholder="Ex: 30">
-
-            <button id="calcular">Calcular</button>
-            <button id="limpar">Limpar</button>
-        </div>
+        <form id="form-aparelho" class="form">
+          <label for="nomeaparelho">Nome do aparelho</label>
+          <input
+            type="text"
+            id="nomeaparelho"
+            placeholder="Ex.: Geladeira"
+            required
+          />
+          <label for="potencia">Potência (W)</label>
+          <input
+            type="number"
+            id="potencia"
+            min="1"
+            max="10000"
+            step="any"
+            placeholder="Ex.: 150"
+            required
+          />
+          <label for="tempo">Tempo de uso (horas)</label>
+          <input
+            type="number"
+            id="tempo"
+            min="0"
+            max="24"
+            step="any"
+            placeholder="Ex.: 0.5"
+            required
+          />
+          <label for="diasMes">Dias de uso no mês</label>
+          <input
+            type="number"
+            id="diasMes"
+            min="1"
+            max="31"
+            step="1"
+            placeholder="Ex.: 30"
+            required
+          />
+          <button type="submit" id="calcular">Adicionar aparelho</button>
+          <button type="button" id="btn-simular">Simular consumo</button>
+          <button type="button" id="limpar">Limpar lista</button>
+        </form>
+        <section>
+          <h3>Aparelhos adicionados</h3>
+          <ul id="lista-aparelhos"></ul>
+        </section>
+        <section id="resultado" aria-live="polite"></section>
+      </section>
     </section>
-    </section>
-
-
-</body>
+  </body>
 </html>
