@@ -4,64 +4,85 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Medidor Coopera</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <script src="app.js" defer></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <section class="card">
-      <section class="Main">
-        <div class="Titulo">
-          <h1>Medidor Coopera</h1>
-          <h2>Simule o consumo de aparelhos em sua residência/empresa</h2>
-        </div>
-        <form id="form-aparelho" class="form">
+    <main class="card">
+      <header class="Titulo">
+        <h1>Medidor Coopera</h1>
+        <h2>Simule o consumo de energia dos aparelhos elétricos</h2>
+      </header>
+
+      <form id="form-aparelho" class="form">
+        <div class="campo campo-completo">
           <label for="nomeaparelho">Nome do aparelho</label>
           <input
             type="text"
             id="nomeaparelho"
-            placeholder="Ex.: Geladeira"
+            placeholder="Ex.: Geladeira duplex"
             required
           />
-          <label for="potencia">Potência (W)</label>
-          <input
-            type="number"
-            id="potencia"
-            min="1"
-            max="10000"
-            step="any"
-            placeholder="Ex.: 150"
-            required
-          />
-          <label for="tempo">Tempo de uso (horas)</label>
-          <input
-            type="number"
-            id="tempo"
-            min="0"
-            max="24"
-            step="any"
-            placeholder="Ex.: 0.5"
-            required
-          />
-          <label for="diasMes">Dias de uso no mês</label>
-          <input
-            type="number"
-            id="diasMes"
-            min="1"
-            max="31"
-            step="1"
-            placeholder="Ex.: 30"
-            required
-          />
-          <button type="submit" id="calcular">Adicionar aparelho</button>
+        </div>
+
+        <div class="campos-grid">
+          <div class="campo">
+            <label for="potencia">Potência (W)</label>
+            <input
+              type="number"
+              id="potencia"
+              min="1"
+              max="10000"
+              step="any"
+              placeholder="150"
+              required
+            />
+          </div>
+
+          <div class="campo">
+            <label for="tempo">Horas por dia</label>
+            <input
+              type="number"
+              id="tempo"
+              min="0"
+              max="24"
+              step="any"
+              placeholder="24"
+              required
+            />
+          </div>
+
+          <div class="campo">
+            <label for="diasMes">Dias no mês</label>
+            <input
+              type="number"
+              id="diasMes"
+              min="1"
+              max="31"
+              step="1"
+              placeholder="30"
+              required
+            />
+          </div>
+        </div>
+
+        <button type="submit" id="calcular">Adicionar aparelho</button>
+
+        <div class="botoes-acoes">
           <button type="button" id="btn-simular">Simular consumo</button>
           <button type="button" id="limpar">Limpar lista</button>
-        </form>
-        <section>
-          <h3>Aparelhos adicionados</h3>
-          <ul id="lista-aparelhos"></ul>
-        </section>
-        <section id="resultado" aria-live="polite"></section>
+        </div>
+      </form>
+
+      <section class="secao-aparelhos">
+        <h3>Aparelhos adicionados</h3>
+        <ul id="lista-aparelhos"></ul>
       </section>
-    </section>
+
+      <section id="resultado" aria-live="polite"></section>
+    </main>
   </body>
 </html>
